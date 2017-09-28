@@ -20,7 +20,7 @@ public class TCPServer01 {
 			while(flag){
 				//等待客户端连接
 				client = server.accept();
-				System.out.println("新的客户端连接成功！" + client.getInetAddress().toString());
+				System.out.println("\n\n新的客户端连接成功！ " + client.getInetAddress().toString());
 				
 				// 为每一个客户端开启一个线程
 				new Thread(new ServerThread(client)).start();
@@ -67,18 +67,21 @@ class ServerThread implements Runnable{
 			while(flag){
 				// 接收从客户端发来的数据
 				String str = reader.readLine();
-				System.out.println("收到客户端消息：" + str);
-				if (str == null || "".equals(str)){
+				System.out.println("收到客户端消息：[ " + str + " ]");
+				if (str == null){
 					flag = false;
 				} else {
 					if (NetDemoConstant.BYEBYE.equals(str)){
 						flag = false;
+						break;
 					} else {
 						writer.println("echo : " + str);
 					}
 				}
 			} // end of while(flag)
 			
+			System.out.println("关闭此客户端连接。");
+			reader.close();
 			writer.close();
 			client.close();
 		} catch (IOException e) {

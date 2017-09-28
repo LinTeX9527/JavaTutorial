@@ -24,6 +24,11 @@ public class TCPClient01 {
 			// 2、socket 设置，如果超时没有socket input stream 输入则 抛出 java.net.SocketTimeoutException 
 			client.setSoTimeout(NetDemoConstant.TIMEOUT_READ_SERVER);
 			
+			if (client.isClosed()){
+				System.out.println("连接服务器失败，关闭，退出。");
+				client.close();
+				return;
+			}
 			// 获取键盘输入
 			BufferedReader input_keyboard = new BufferedReader(new InputStreamReader(System.in));
 			
@@ -40,22 +45,37 @@ public class TCPClient01 {
 				System.out.print("输入信息：");
 				String str = input_keyboard.readLine();
 				
+				System.out.println(String.format("your input is [%s]", str));
+				
+				if (str == null){
+					System.out.println("服务器发送给我们的消息为空，退出。");
+					flag = false;
+					break;
+				}
 				// 发送数据到服务器端
 				writer.println(str);
+				writer.flush();
+				
 				// 检测是否要断开连接
 				if (NetDemoConstant.BYEBYE.equals(str)){
 					flag = false;
 				} else {
 					// 从服务器接收消息
 					String echo = reader.readLine();
-					System.out.println(echo);
-					
+					if (echo == null){
+						System.out.println("接收到服务器消息: null");
+						flag = false;
+						break;
+					} else {
+						System.out.println("接收到服务器消息:" + echo);
+					}
 				}
 			} // end while(flag)
 			
 			// 关闭输入、输出流
+			System.out.println("关闭退出。。。");
 			input_keyboard.close();
-			
+			reader.close();
 			if (client != null){
 				client.close();
 			}

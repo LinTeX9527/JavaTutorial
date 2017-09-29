@@ -20,9 +20,9 @@ import java.util.logging.Logger;
  * @author LinTeX9527
  *
  */
-public class LogTest {
+public class LoggerTest {
 
-	static String strClassName = LogTest.class.getSimpleName();
+	static String strClassName = LoggerTest.class.getSimpleName();
 	// 初始化 logger，而且logger必须有一个名字
 	static Logger logger = Logger.getLogger(strClassName);
 	

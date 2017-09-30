@@ -1,12 +1,12 @@
 package com.imooc.annotation;
 
-public class Child implements Person {
-
+public class Older implements Person {
+	
 	private String name;
 	private int age;
 	
 	
-	public Child(String name, int age) {
+	public Older(String name, int age) {
 		super();
 		this.name = name;
 		this.age = age;
@@ -24,12 +24,7 @@ public class Child implements Person {
 
 	@Override
 	public void sing() {
-		System.out.println("child sing wonderful.");
+		System.out.println("older sing a song with great effort.");
 	}
 
-	
-	@Override
-	public String toString() {
-		return String.format("name: %s, age: %d.", name, age);
-	}
 }
